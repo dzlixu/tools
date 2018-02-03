@@ -139,17 +139,20 @@
             border-collapse: collapse;
             border-spacing: 0;
         }
+        html,body{
+
+            height:100rem;
+        }
 
         /* alert */
 
         .lx-alert {
             position: fixed;
             top: 0;
-            right: 0;
             bottom: 0;
+            right: 0;
             left: 0;
             z-index: 1050;
-            display: none;
             overflow: hidden;
             outline: 0;
             background-color: rgba(150, 150, 150, 0.75);
@@ -157,14 +160,14 @@
 
         }
 
-        .alert-open .lx-alert {
+        /* .alert-open .lx-alert {
             display: block;
             overflow-x: hidden;
             overflow-y: auto;
-        }
+        } */
 
         .lx-alert-container {
-            position: relative;
+            position: absolute;
             top: 50%;
             left: 50%;
             margin-top: -3rem;
@@ -247,7 +250,7 @@
 
     <script>
         $(function () {
-            function myalert(opts, cb) {
+            $.myalert = function (opts, cb) {
                 var config = {
                     title: '提示',
                     content: '提示内容'
@@ -276,8 +279,8 @@
                         var data = {
                             res: "no"
                         }
-                        $('body').removeClass('alert-open');
                         cb(data);
+                        $('.lx-alert').remove();
 
 
                     }
@@ -285,8 +288,8 @@
                         var data = {
                             res: "yes"
                         }
-                        $('body').removeClass('alert-open');
                         cb(data);
+                        $('.lx-alert').remove();
 
                     }
 
@@ -295,7 +298,7 @@
 
             }
             $("#btn_open").on('click', function () {
-                myalert({ content: "hahhahah" }, function (data) {
+                $.myalert({ content: "hahhahah" }, function (data) {
                     alert('结果是' + data.res);
                 })
                 // $('body').addClass('alert-open');
