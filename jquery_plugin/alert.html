@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> alert</title>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <style>
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td,
+        article,
+        aside,
+        canvas,
+        details,
+        embed,
+        figure,
+        figcaption,
+        footer,
+        header,
+        hgroup,
+        menu,
+        nav,
+        output,
+        ruby,
+        section,
+        summary,
+        time,
+        mark,
+        audio,
+        video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        /* HTML5 display-role reset for older browsers */
+
+        article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        menu,
+        nav,
+        section {
+            display: block;
+        }
+
+        body {
+            line-height: 1;
+        }
+
+        ol,
+        ul {
+            list-style: none;
+        }
+
+        blockquote,
+        q {
+            quotes: none;
+        }
+
+        blockquote:before,
+        blockquote:after,
+        q:before,
+        q:after {
+            content: '';
+            content: none;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        /* alert */
+
+        .lx-alert {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1050;
+            display: none;
+            overflow: hidden;
+            outline: 0;
+            background-color: rgba(150, 150, 150, 0.75);
+
+
+        }
+
+        .alert-open .lx-alert {
+            display: block;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .lx-alert-container {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            margin-top: -3rem;
+            margin-left: -8rem;
+            width: 16rem;
+            background-color: #fff;
+            border: 1px solid transparent;
+            border-radius: 0.5rem;
+        }
+
+        .lx-alert-header {
+            text-align: center;
+            font-size: 1.5rem;
+            line-height: 2rem;
+        }
+
+        .lx-alert-body {
+            border-top: 1px solid;
+            border-bottom: 1px solid;
+            border-color: #d1d1d1;
+            padding: 1rem 0.5rem;
+            max-height: 8rem;
+            overflow: hidden;
+        }
+
+        .lx-alert-footer {
+            display: flex;
+            justify-content: center;
+            height: 2rem;
+        }
+
+        .lx-alert-button {
+            flex: 0rem;
+            /* align-self: center; */
+            text-align: center;
+            line-height: 2rem;
+            height: 2rem;
+        }
+
+        .alert-confirm {}
+
+        .alert-cancel {
+            border-right: 1px solid #d1d1d1;
+        }
+    </style>
+</head>
+
+<body class="alert-open">
+    <button id="btn_open">打开</button>
+    <button id="btn_close">关闭</button>
+
+    <!-- 
+    <div class="lx-alert  ">
+        <div class="lx-alert-container">
+            <div class="lx-alert-header">提示</div>
+            <div class="lx-alert-body">确定要干什么吗？
+                <br>确定要干什么吗？
+                <br>确定要干什么吗？
+                <br>确定要干什么吗？
+                <br>6确定要干什么吗？
+                <br>7确定要干什么吗？
+                <br>8确定要干什么吗？
+                <br>9确定要干什么吗？
+                <br>9确定要干什么吗？
+                <br>9确定要干什么吗？
+                <br>9确定要干什么吗？
+                <br>12确定要干什么吗？
+                <br>
+            </div>
+            <div class="lx-alert-footer">
+                <div class="lx-alert-button alert-cancel">
+                    取消
+                </div>
+                <div class="lx-alert-button alert-confirm">
+                    确定
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <script>
+        $(function () {
+            function myalert(opts, cb) {
+                var config = {
+                    title: '提示',
+                    content: '提示内容'
+                }
+                $.extend(config, opts)
+                var template = `
+                    <div class="lx-alert  ">
+                        <div class="lx-alert-container">
+                            <div class="lx-alert-header">${config.title}</div>
+                            <div class="lx-alert-body">${config.content}</div>
+                            <div class="lx-alert-footer">
+                                <div class="lx-alert-button alert-cancel">
+                                    取消
+                                </div>
+                                <div class="lx-alert-button alert-confirm">
+                                    确定
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                var $temp = $(template)
+                $temp.on("click", function (event) {
+                    console.log(event.target);
+                    if ($(event.target).hasClass('alert-cancel')) {
+                        var data = {
+                            res: "no"
+                        }
+                        $('body').removeClass('alert-open');
+                        cb(data);
+
+
+                    }
+                    if ($(event.target).hasClass('alert-confirm')) {
+                        var data = {
+                            res: "yes"
+                        }
+                        $('body').removeClass('alert-open');
+                        cb(data);
+
+                    }
+
+                });
+                $('body').append($temp);
+
+            }
+            $("#btn_open").on('click', function () {
+                myalert({ content: "hahhahah" }, function (data) {
+                    alert('结果是' + data.res);
+                })
+                // $('body').addClass('alert-open');
+            })
+            $("#btn_close").on('click', function () {
+                $('body').removeClass('alert-open');
+            })
+
+
+        })
+    </script>
+</body>
+
+</html>
